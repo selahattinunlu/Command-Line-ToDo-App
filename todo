@@ -1,0 +1,33 @@
+#! /usr/bin/env php
+
+<?php 
+
+use Symfony\Component\Console\Application;
+use Unlu\CLTodo\Command\ShowCommand;
+use Unlu\CLTodo\Command\AddCommand;
+use Unlu\CLTodo\Command\RemoveCommand;
+use Unlu\CLTodo\DatabaseAdapter;
+use PDO;
+
+require __DIR__ . '/vendor/autoload.php';
+
+// Database Connection
+try {
+    $pdo = new PDO('sqlite:todo.db');
+
+    // TODO: set pdo attributes
+} catch (Exception $e) {
+    echo 'Cannot connect to the database.';
+    exit(1);
+}
+
+$databaseAdapter = new DatabaseAdapter($pdo);
+
+// Application
+$app = new Application('Command Line ToDo App', '1.0');
+
+$app->add(new ShowCommand($databaseAdapter));
+$app->add(new AddCommand($databaseAdapter));
+$app->add(new RemoveCommand($databaseAdapter));
+
+$app->run();
