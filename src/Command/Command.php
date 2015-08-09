@@ -3,21 +3,21 @@
 namespace Unlu\CLTodo\Command;
 
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
-use Unlu\CLTodo\DatabaseAdapter;
+use Unlu\CLTodo\Task;
 
 class Command extends SymfonyCommand
 {   
-    private $database;
+    private $task;
 
-    public function __construct(DatabaseAdapter $database)
+    public function __construct(Task $task)
     {
-        $this->database = $database;
+        $this->task = $task;
 
         parent::__construct();
     }
 
-    protected function database()
+    protected function task()
     {
-        return $this->database;
+        return $this->task;
     }
 }

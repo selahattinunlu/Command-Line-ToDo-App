@@ -11,11 +11,16 @@ class RemoveCommand extends Command
     public function configure()
     {
         $this->setName('remove')
-             ->setDescription('Remove Task By ID');
+             ->setDescription('Remove Task By ID')
+             ->addArgument('id', InputArgument::REQUIRED);
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln("<info> This command removes the task by id. </info>");
+        $id = $input->getArgument('id');
+
+        $this->task()->remove($id);
+
+        $output->writeln("<info>Removed.</info>");
     }
 }
